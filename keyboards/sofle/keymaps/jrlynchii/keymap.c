@@ -81,6 +81,7 @@ bool oled_task_user(void) {
 #ifdef ENCODER_ENABLE
 
 bool tab_now = false;
+bool vol_now = false;
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
@@ -98,10 +99,15 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     } else if (index == 1) {
         if (clockwise) {
+          if(vol_now) {
             tap_code16(KC_VOLD);
+          }
         } else {
+          if(vol_now) {
             tap_code16(KC_VOLU);
+          }
         }
+        vol_now = !vol_now;
     }
     return true;
 }
